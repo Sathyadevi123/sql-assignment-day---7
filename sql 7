@@ -1,0 +1,66 @@
+use students;
+show tables;
+
+create table emps(
+empid int auto_increment primary key,
+epname varchar(20),
+depid int);
+
+create table deps(
+depid int auto_increment primary key,
+depname varchar(20) );
+insert into emps (epname,depid) values ('Ram',1),('Gaja',2),
+('vino',3),('Harish',4),('John',5);
+insert into emps (epname,depid) values ('Ravi',null);
+insert into deps (depname) values 
+('HR'),('sales'),('SM'),('Manager');
+insert into deps (depname) values ('Lead');
+select * from emps;
+select * from deps;
+
+# innner join
+select emps.empid,emps.epname,deps.depname
+from emps
+inner join deps
+on emps.depid = deps.depid;
+
+#left join
+select emps.empid,emps.epname,deps.depname
+from emps
+left join deps
+on emps.depid = deps.depid;
+
+#right join
+select emps.empid,emps.epname,deps.depname
+from emps
+right join deps
+on emps.depid = deps.depid;
+
+#full outer join
+select emps.empid,emps.epname,deps.depname
+from emps
+inner join deps
+on emps.depid = deps.depid
+union
+select emps.empid,emps.epname,deps.depname
+from emps
+inner join deps
+on emps.depid = deps.depid;
+
+#cross join
+select emps.empid,emps.epname,deps.depname
+from emps
+cross join deps;
+
+alter table emps add column manager_id int;
+desc emps;
+select * from emps;
+update emps set manager_id = 1 where empid = 3;
+update emps set manager_id = 2 where empid = 1;
+update emps set manager_id = 3 where empid = 4;
+update emps set manager_id = 3 where empid = 2;
+
+select a.epname as employee, b.epname as manager,
+a.manager_id as managerID,b.empid as EmpID
+from emps a,emps b
+where a.manager_id = b.empid;
